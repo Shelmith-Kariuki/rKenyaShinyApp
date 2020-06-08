@@ -1,0 +1,12 @@
+name: KenyaCensus2019_V2
+title: KenyaCensus2019_V2
+username:
+account: shel-kariuki
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2419362
+bundleId: 3242520
+url: https://shel-kariuki.shinyapps.io/KenyaCensus2019_V2/
+when: 1591621927.11894
+asMultiple: FALSE
+asStatic: FALSE

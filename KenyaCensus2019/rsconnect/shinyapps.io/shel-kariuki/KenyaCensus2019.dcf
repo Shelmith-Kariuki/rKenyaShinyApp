@@ -5,8 +5,8 @@ account: shel-kariuki
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2427261
-bundleId: 3244215
+bundleId: 3244923
 url: https://shel-kariuki.shinyapps.io/KenyaCensus2019/
-when: 1591647232.16931
+when: 1591657199.39339
 asMultiple: FALSE
 asStatic: FALSE

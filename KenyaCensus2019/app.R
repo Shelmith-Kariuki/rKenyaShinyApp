@@ -57,6 +57,9 @@ ui <- fluidPage(title = "2019 Kenya Population and Housing Census",
                      tabPanel(span(style = "color:red; font-weight:bolder; font-style:italic;",  h1("Analysis")),
                  
                  fluidRow(
+                   column(12, br(),br(),
+                          "Apologies that this is taking longer than expected. Please be patient, the analysis will be displayed in a few seconds. I am working hard to speed up the process!!",
+                           style="color:black;font-weight:bolder;font-size: large; font-style:italic;"),br(),br(),br(),br(),br(),br(),
                      # side bar panel
                      column(2,
                             selectInput("var", tags$h4(tags$b(tags$i("Select Variable"))), ict_vars)),
@@ -160,7 +163,7 @@ output$download2 <- downloadHandler(
         paste0(input$dats1, ".xlsx")
     },
     content = function(file) {
-        write.csv(datashown(), file)
+        write.xlsx(datashown(), file)
     }
 )
 
@@ -216,9 +219,10 @@ output$download4 <- downloadHandler(
         paste0("ICT_df.xlsx")
     },
     content = function(file) {
-        write.csv(phone_df(), file)
+        write.xlsx(phone_df(), file)
     }
 )
+
 
 ## Main table
 maintable_df <- reactive({
@@ -237,7 +241,7 @@ output$download7 <- downloadHandler(
         paste0(input$var, ".xlsx")
     },
     content = function(file) {
-        write.csv(maintable_df(), file)
+        write.xlsx(maintable_df(), file)
     }
 )
 
@@ -332,19 +336,20 @@ output$download7 <- downloadHandler(
 ##-------------------------------------------
 
 output$mainmap <- renderLeaflet({
-  ##-------------------------------------------
-  
-  data <- ICT_df
-  data <- data %>% ungroup() %>% 
-    mutate(County = as.character(County))%>% 
-      filter(AdminArea== "County") 
-  
-  Kenya_df <- st_as_sf(rKenyaCensus::KenyaCounties_SHP)
-  
-  KenyaCounties_SHP2 <- Kenya_df %>% st_transform(crs = 4326)
 
-  map <- full_join(KenyaCounties_SHP2, data, by="County")
+##-------------------------------------------
   
+  # data <- ICT_df
+  # data <- data %>% ungroup() %>% 
+  #   mutate(County = as.character(County))%>% 
+  #     filter(AdminArea== "County") 
+  # 
+  # Kenya_df <- st_as_sf(rKenyaCensus::KenyaCounties_SHP)
+  # 
+  # KenyaCounties_SHP2 <- Kenya_df %>% st_transform(crs = 4326)
+  # 
+  # map <- full_join(KenyaCounties_SHP2, data, by="County")
+  # 
   options(scipen = 999999)
   
   # ADD this to create variableplot
@@ -408,7 +413,7 @@ output$mainmap <- renderLeaflet({
                 paste0(input$county,"_",input$var, ".xlsx")
             },
             content = function(file) {
-                write.csv(countytab(), file)
+                write.xlsx(countytab(), file)
             }
         )
 ## Sub County plot

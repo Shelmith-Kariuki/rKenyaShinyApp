@@ -7,6 +7,7 @@ library(tidyverse)
 library(sf)
 #library(rgeos)
 library(leaflet)
+library(openxlsx)
 #library(rgdal)
 #pkgload::load_all(path= "rgdal_1.5-9/rgdal")
 
@@ -37,3 +38,16 @@ ICT_df <- full_join(V4_T2.32, V4_T2.33, by = c("County", "SubCounty", "AdminArea
 # ICT_df$diff2 <- ICT_df$Male.x - ICT_df$Male.y
 # ICT_df$diff3 <- ICT_df$Female.x - ICT_df$Female.y
 ict_vars<- names(ICT_df)[!names(ICT_df) %in% c("County","SubCounty","AdminArea")]
+
+##-------------------------------------------
+
+data <- ICT_df
+data <- data %>% ungroup() %>% 
+  mutate(County = as.character(County))%>% 
+  filter(AdminArea== "County") 
+
+Kenya_df <- st_as_sf(rKenyaCensus::KenyaCounties_SHP)
+
+KenyaCounties_SHP2 <- Kenya_df %>% st_transform(crs = 4326)
+
+map <- full_join(KenyaCounties_SHP2, data, by="County")

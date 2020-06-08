@@ -14,14 +14,22 @@ library(leaflet)
 
 options(scipen = 9999999)
 DataCatalogue$Dataset <- gsub(" ","", DataCatalogue$Dataset) 
+DataCatalogue <- rKenyaCensus::DataCatalogue %>% 
+  mutate(Volume = ifelse(Dataset == "DataCatalogue", "DataCatalogue", as.character(Volume)))
+
 dats <- unique(DataCatalogue$Dataset)
 volumes <- unique(DataCatalogue$Volume)
 counties <- unique(V4_T2.26$County)
 DataCatalogue <- DataCatalogue %>% 
-  mutate(VolumeDecription =ifelse(Volume == "V1", "Population by County and Sub-County",
+  mutate(VolumeDecription = ifelse(Volume == "V1", "Population by County and Sub-County",
                                   ifelse(Volume == "V2", "Distribution of Population by Administrative Units",
                                          ifelse(Volume == "V3", "Distribution of Population by Age, Sex and Administrative Units",
                                                 ifelse(Volume == "V4", "Distribution of Population by Socio-Economic Characteristics","")))))
+
+DataCatalogue <- DataCatalogue %>% 
+  mutate(VolumeDecription =  ifelse(Dataset == "DataCatalogue", "xxx", as.character(VolumeDecription)))
+
+
 V4_T2.33 <- rKenyaCensus::V4_T2.33
 V4_T2.33 <- V4_T2.33 %>% select(-Total, -Male, -Female)
 ICT_df <- full_join(V4_T2.32, V4_T2.33, by = c("County", "SubCounty", "AdminArea"))
